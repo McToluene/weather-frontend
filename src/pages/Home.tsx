@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const handleLocationSelect = async (result: SearchResult) => {
     try {
       setIsLoading(true);
-      const response = await axios.get('http://localhost:8081/api/weather/forecast', {
+      const response = await axios.get(`${process.env.BASE_URL}/weather/forecast`, {
         params: {
           lat: result.lat,
           lon: result.lon,

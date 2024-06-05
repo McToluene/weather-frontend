@@ -15,12 +15,9 @@ const Search: React.FC<SearchProps> = ({ onLocationSelect }) => {
     if (query.length > 2) {
       try {
         setLoading(true);
-        const response = await axios.get<SearchResult[]>(
-          'http://localhost:8081/api/weather/search',
-          {
-            params: { cityName: query },
-          }
-        );
+        const response = await axios.get<SearchResult[]>(`${process.env.BASE_URL}/weather/search`, {
+          params: { cityName: query },
+        });
         setResults(response.data);
         setLoading(false);
       } catch (error) {

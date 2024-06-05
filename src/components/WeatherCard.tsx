@@ -17,7 +17,7 @@ const WeatherCard: React.FC = () => {
     if (data != null) {
       try {
         setIsLoading(true);
-        const response = await axios.get('http://localhost:8081/api/weather/current', {
+        const response = await axios.get(`${process.env.BASE_URL}/weather/current`, {
           params: {
             lat: data.city.coord.lat,
             lon: data.city.coord.lon,
