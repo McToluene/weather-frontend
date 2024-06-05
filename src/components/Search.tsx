@@ -12,12 +12,16 @@ const Search: React.FC<SearchProps> = ({ onLocationSelect }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSearch = useCallback(async () => {
+    console.log(process.env.REACT_APP_SERVER_URL);
     if (query.length > 2) {
       try {
         setLoading(true);
-        const response = await axios.get<SearchResult[]>(`${process.env.BASE_URL}/weather/search`, {
-          params: { cityName: query },
-        });
+        const response = await axios.get<SearchResult[]>(
+          `${process.env.REACT_APP_SERVER_URL}/weather/search`,
+          {
+            params: { cityName: query },
+          }
+        );
         setResults(response.data);
         setLoading(false);
       } catch (error) {
