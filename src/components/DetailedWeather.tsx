@@ -13,9 +13,13 @@ const DetailedWeather: React.FC = () => {
   }
 
   return (
-    <div className='p-4'>
-      <h2 className='text-2xl font-bold mb-4 text-center'>Detailed Weather</h2>
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4'>
       <div className=' p-4 flex flex-col justify-center items-center text-center'>
+        <img
+          className='w-36 h-36 mb-1'
+          src={`http://openweathermap.org/img/w/${detailedWeatherData.weather[0].icon}.png`}
+          alt={detailedWeatherData.weather[0].description}
+        />
         <p>Temperature: {(detailedWeatherData.main.temp - 273.15).toFixed(1)}°C</p>
         <p>Feels Like: {(detailedWeatherData.main.feels_like - 273.15).toFixed(1)}°C</p>
         <p>Humidity: {detailedWeatherData.main.humidity}%</p>
