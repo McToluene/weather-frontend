@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Search from '../components/Search';
 import WeatherCard from '../components/WeatherCard';
 import { WeatherContext } from '../context/WeatherContext';
@@ -7,6 +7,14 @@ import axios from 'axios';
 
 const Home: React.FC = () => {
   const { setWeatherForecast: setWeatherData, setIsLoading } = useContext(WeatherContext)!;
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 3000);
+  };
 
   const handleLocationSelect = async (result: SearchResult) => {
     try {
@@ -20,9 +28,14 @@ const Home: React.FC = () => {
       console.log(response);
       setWeatherData(response.data);
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching weather data', error);
       setIsLoading(false);
+      if (error.response && error.response.status === 404) {
+        showToast('Location not found');
+      } else {
+        showToast('An error occurred');
+      }
     }
   };
 
@@ -30,6 +43,11 @@ const Home: React.FC = () => {
     <>
       <Search onLocationSelect={handleLocationSelect} />
       <WeatherCard />
+      {toastMessage && (
+        <div className='fixed bottom-0 left-0 w-full bg-red-500 text-white text-center p-2'>
+          {toastMessage}
+        </div>
+      )}
     </>
   );
 };
